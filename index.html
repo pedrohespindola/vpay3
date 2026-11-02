@@ -174,6 +174,7 @@
   .rule svg{width:18px;height:18px;stroke:var(--green-800);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;margin-top:1px}
   .chips.five .chip{font-size:12.5px;padding:0}
   .free{color:var(--green-800)}
+  .ver{text-align:center;font-size:11px;color:#a5a5a5;margin-top:22px}
   .field{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 4px;font-size:14px;color:var(--ink)}
   .field .inp{display:flex;align-items:center;gap:8px;color:var(--muted)}
   .field input{width:84px;height:42px;border:1.5px solid #d6d6d6;border-radius:12px;background:#fff;font:inherit;font-size:17px;font-weight:600;text-align:center;color:var(--ink);outline:none;-moz-appearance:textfield}
@@ -276,6 +277,7 @@
       <h3 class="sec">Cartões pra fazer pagamentos</h3>
       <p>Adicione e use todos os seus cartões no Verdepay.</p>
     </section>
+    <p class="ver js-ver"></p>
   </main>
 
   <button class="fab" aria-label="Cobrar">Cobrar
@@ -379,6 +381,7 @@
       </div>
       <p class="note">Simulação fictícia para fins acadêmicos. Valores e taxas não são reais.</p>
     </section>
+    <p class="ver js-ver"></p>
   </div>
 
   <div class="t-actions">
@@ -481,9 +484,25 @@
   document.querySelectorAll('#chips .chip').forEach(c => c.addEventListener('click', () => { slider.value = c.dataset.p; simValor(); }));
   simPrazo();
 
-  /* ---- PWA ---- */
+  /* ---- versão ---- */
+  const APP_VERSION = 'v6';
+  document.querySelectorAll('.js-ver').forEach(e => e.textContent = 'Verdepay Empresas · ' + APP_VERSION);
+
+  /* ---- PWA: atualização automática ---- */
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    const hadController = !!navigator.serviceWorker.controller;
+    let reloading = false;
+    // quando uma versão nova assume o controle, recarrega a tela uma única vez
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController || reloading) return;
+      reloading = true; location.reload();
+    });
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(reg => {
+        reg.update();
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update(); });
+      }).catch(() => {});
+    });
   }
 </script>
 </body>
