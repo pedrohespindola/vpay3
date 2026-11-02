@@ -185,6 +185,37 @@
     padding:12px 16px calc(env(safe-area-inset-bottom) + 12px);border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;z-index:6}
   .btn-dark{height:50px;border-radius:25px;background:#0b0b0b;color:#fff;font-size:15.5px;font-weight:600;text-align:center}
   .btn-text{height:36px;font-size:14px;font-weight:500;color:var(--muted);text-align:center}
+
+  /* ---- fluxo de confirmação ---- */
+  .view-pad{padding:16px 16px 150px;display:flex;flex-direction:column;gap:14px}
+  .t-head.compact{padding-bottom:22px}
+  .t-head.compact .amount{font-size:30px}
+  .passwrap{display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 24px 160px}
+  .lock{width:76px;height:76px;border-radius:50%;background:#e4f1e9;display:grid;place-items:center;margin-bottom:18px}
+  .lock svg{width:34px;height:34px;stroke:var(--green-800);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .passwrap h2{font-size:22px;font-weight:700;letter-spacing:-.4px}
+  .passwrap p.sub2{font-size:14px;color:var(--muted);line-height:1.45;margin-top:8px;max-width:300px}
+  .pfield{position:relative;width:100%;margin-top:26px}
+  .pfield input{width:100%;height:56px;border:1.5px solid #d6d6d6;border-radius:16px;background:#fff;font:inherit;font-size:18px;padding:0 52px 0 16px;outline:none;color:var(--ink);letter-spacing:.5px}
+  .pfield input:focus{border-color:var(--green-800);box-shadow:0 0 0 3px rgba(10,74,44,.12)}
+  .pfield button{position:absolute;right:6px;top:6px;width:44px;height:44px;display:grid;place-items:center}
+  .pfield button svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .btn-dark:disabled{background:#c9c9c9;cursor:default}
+
+  .done-head{background:var(--green-800);color:#fff;border-radius:0 0 28px 28px;padding:calc(env(safe-area-inset-top) + 36px) 20px 28px;text-align:center}
+  .check{width:72px;height:72px;border-radius:50%;background:var(--accent);margin:0 auto 16px;display:grid;place-items:center;animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
+  .check svg{width:38px;height:38px;stroke:#06331f;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .done-head h1{font-size:24px;font-weight:700;letter-spacing:-.5px}
+  .done-head p{font-size:14.5px;opacity:.9;margin-top:8px;line-height:1.4}
+  .timer-box{text-align:center}
+  .timer-box small{font-size:13px;color:var(--muted)}
+  .timer{font-size:46px;font-weight:700;letter-spacing:-1px;font-variant-numeric:tabular-nums;margin:6px 0 2px;color:var(--green-800)}
+  .timer-units{display:flex;justify-content:center;gap:0;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  .timer-units span{width:84px}
+  .bar{height:8px;border-radius:4px;background:#e2e2e2;overflow:hidden;margin-top:16px}
+  .bar i{display:block;height:100%;width:0;background:var(--green-800);border-radius:4px;transition:width .6s linear}
+  .linkbtn{height:36px;font-size:13px;color:var(--muted);text-align:center;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -244,7 +275,7 @@
   <!-- Banner: pedido de transferência pendente -->
   <button class="banner" id="openTransfer">
     <span class="mini"><svg viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></svg></span>
-    <span>Você tem um pedido de transferência pendente<small>Migração da conta PJ de outro banco</small></span>
+    <span><span id="bTitle">Você tem um pedido de transferência pendente</span><small id="bSub">Migração da conta PJ de outro banco</small></span>
     <svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
   </button>
 
@@ -297,7 +328,7 @@
 <div class="app" id="transfer" hidden>
   <header class="t-head">
     <div class="t-bar">
-      <button class="back" id="back" aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="back" data-back aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <h1>Transferência de conta</h1>
     </div>
     <span class="status"><i></i>Pedido pendente</span>
@@ -320,7 +351,6 @@
       <div class="kv"><span>Solicitado em</span><b>02/11/2026</b></div>
       <div class="kv"><span>Prazo estimado</span><b id="vPrazo">120 dias</b></div>
     </section>
-
 
     <section class="box">
       <h4>Calculadora de prazo</h4>
@@ -360,33 +390,101 @@
       <div class="kv"><span>Tarifa de migração</span><b id="vTarifa">R$ 0,00</b></div>
       <div class="kv total"><span>Você recebe na conclusão</span><b id="vTotal2">R$ 0,00</b></div>
     </section>
-
-    <section class="box">
-      <h4>Simular adiantamento</h4>
-      <div class="sim-top">
-        <div><small>Quanto adiantar</small><div class="big" id="vAdv">R$ 0,00</div></div>
-        <span class="pct" id="vPct">40%</span>
-      </div>
-      <input type="range" id="slider" min="0" max="70" step="5" value="40" aria-label="Percentual a adiantar">
-      <div class="scale"><span>0%</span><span>Até 70% do saldo</span></div>
-      <div class="chips" id="chips">
-        <button class="chip" data-p="25">25%</button>
-        <button class="chip" data-p="50">50%</button>
-        <button class="chip" data-p="70">70%</button>
-      </div>
-      <div class="result">
-        <div class="kv"><span>Taxa do adiantamento (1,5%)</span><b id="vFee">R$ 0,00</b></div>
-        <div class="kv now"><span>Você recebe agora</span><b id="vNow">R$ 0,00</b></div>
-        <div class="kv"><span>Restante na conclusão</span><b id="vRest">R$ 0,00</b></div>
-      </div>
-      <p class="note">Simulação fictícia para fins acadêmicos. Valores e taxas não são reais.</p>
-    </section>
     <p class="ver js-ver"></p>
   </div>
 
   <div class="t-actions">
-    <button class="btn-dark">Confirmar transferência</button>
+    <button class="btn-dark" id="goConfirm">Confirmar transferência</button>
     <button class="btn-text">Recusar pedido</button>
+  </div>
+</div>
+
+<!-- ====================== RESUMO PARA CONFIRMAR ====================== -->
+<div class="app" id="confirm" hidden>
+  <header class="t-head compact">
+    <div class="t-bar">
+      <button class="back" data-back aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h1>Revise seu pedido</h1>
+    </div>
+    <p class="lbl" style="margin-top:0">Você vai receber na conclusão</p>
+    <p class="amount" id="cNet">R$ 0,00</p>
+    <p class="sub">Confira os dados antes de autorizar</p>
+  </header>
+  <div class="view-pad">
+    <section class="box">
+      <h4>Resumo do pedido</h4>
+      <div class="kv"><span>Tipo</span><b>Migração de titularidade PJ</b></div>
+      <div class="kv"><span>Origem</span><b>Banco Exemplo S.A.<br><small style="font-weight:400;color:var(--muted)">Ag. 0001 · CC ••4821-9</small></b></div>
+      <div class="kv"><span>Destino</span><b>Verdepay PJ</b></div>
+      <div class="kv"><span>Titular</span><b>EMPRESA EXEMPLO LTDA</b></div>
+      <div class="kv"><span>CNPJ</span><b>00.000.000/0001-00</b></div>
+    </section>
+    <section class="box">
+      <h4>Prazo e valores</h4>
+      <div class="kv"><span>Liberação em</span><b id="cPrazo">—</b></div>
+      <div class="kv"><span>Conclusão prevista</span><b id="cDate">—</b></div>
+      <div class="kv"><span>Saldo a transferir</span><b id="cTotal">R$ 0,00</b></div>
+      <div class="kv"><span>Tarifa de migração</span><b id="cTarifa">R$ 0,00</b></div>
+      <div class="kv total"><span>Você recebe</span><b id="cNet2">R$ 0,00</b></div>
+    </section>
+    <p class="ver js-ver"></p>
+  </div>
+  <div class="t-actions">
+    <button class="btn-dark" id="goPass">Continuar</button>
+    <button class="btn-text" data-back>Voltar e editar</button>
+  </div>
+</div>
+
+<!-- ====================== SENHA ====================== -->
+<div class="app" id="pass" hidden>
+  <header class="t-head compact">
+    <div class="t-bar" style="margin-bottom:0">
+      <button class="back" data-back aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h1>Autorizar transferência</h1>
+    </div>
+  </header>
+  <div class="passwrap">
+    <div class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2.500"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+    <h2>Digite sua senha</h2>
+    <p class="sub2">Para concluir o pedido de transferência, confirme com a senha do Verdepay.</p>
+    <div class="pfield">
+      <input id="pwd" type="password" placeholder="Senha" autocomplete="off" aria-label="Senha">
+      <button id="pwdToggle" aria-label="Mostrar senha">
+        <svg viewBox="0 0 24 24"><path d="M2 12s3.500-7 10-7 10 7 10 7-3.500 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="t-actions">
+    <button class="btn-dark" id="authorize" disabled>Autorizar transferência</button>
+  </div>
+</div>
+
+<!-- ====================== CONCLUÍDO + TIMER ====================== -->
+<div class="app" id="done" hidden>
+  <header class="done-head">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg></div>
+    <h1 id="dnTitle">Transferência solicitada!</h1>
+    <p id="dnMsg">O pagamento será gerado em até <b>12 horas</b>.</p>
+  </header>
+  <div class="view-pad">
+    <section class="box timer-box">
+      <small id="dnLabel">Tempo restante para gerar o pagamento</small>
+      <div class="timer" id="timer">12:00:00</div>
+      <div class="timer-units"><span>horas</span><span>min</span><span>seg</span></div>
+      <div class="bar"><i id="timerBar"></i></div>
+    </section>
+    <section class="box">
+      <h4>Resumo</h4>
+      <div class="kv"><span>Protocolo</span><b>VP-2026-004871</b></div>
+      <div class="kv"><span>Liberação em</span><b id="nPrazo">—</b></div>
+      <div class="kv"><span>Conclusão prevista</span><b id="nDate">—</b></div>
+      <div class="kv total"><span>Você recebe</span><b id="nNet">R$ 0,00</b></div>
+    </section>
+    <p class="ver js-ver"></p>
+  </div>
+  <div class="t-actions">
+    <button class="btn-dark" id="toHome">Voltar ao início</button>
+    <button class="linkbtn" id="resetSim">Reiniciar simulação</button>
   </div>
 </div>
 
@@ -400,35 +498,26 @@
     dots.forEach((d, n) => d.classList.toggle('on', n === i));
   }, { passive: true });
 
-  /* ---- navegação entre telas (hash) ---- */
-  const home = document.getElementById('home');
-  const transfer = document.getElementById('transfer');
-  let inApp = false;
-  function route(){
-    const t = location.hash === '#/transferencia';
-    home.hidden = t; transfer.hidden = !t;
-    document.querySelector('meta[name=theme-color]').content = '#0a4a2c';
-    window.scrollTo(0, 0);
-  }
-  document.getElementById('openTransfer').addEventListener('click', () => { inApp = true; location.hash = '#/transferencia'; });
-  document.getElementById('back').addEventListener('click', () => {
-    if (inApp) history.back(); else { location.hash = ''; }
-  });
-  window.addEventListener('hashchange', route);
-  route();
-
-  /* ---- simuladores ---- */
-  const TOTAL = 48750.00, FEE = 0.015;                 // saldo e taxa do adiantamento de valor
-  // Calculadora de prazo: 120 dias é grátis; liberar em 30 dias custa R$ 2.317,00 (proporcional por dia)
-  const PRAZO_PADRAO = 120, PRAZO_REF = 30, CUSTO_REF = 2317;
-  const POR_DIA = CUSTO_REF / (PRAZO_PADRAO - PRAZO_REF);   // ≈ R$ 25,74 por dia adiantado
-  const BASE = new Date(2026, 10, 2);                  // pedido solicitado em 02/11/2026
-  const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const $ = id => document.getElementById(id);
+  const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const fmtDias = d => d + (d === 1 ? ' dia' : ' dias');
   const fmtData = d => d.toLocaleDateString('pt-BR');
-  const slider = $('slider'), dSlider = $('dSlider'), dInput = $('dInput');
-  let tarifa = 0;
+  const pad = n => String(n).padStart(2, '0');
+
+  /* ---- estado do pedido (guardado no aparelho) ---- */
+  const KEY = 'vp_order', HORAS_12 = 12 * 3600 * 1000;
+  let order = null;
+  try { order = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  const saveOrder = o => { order = o; try { o ? localStorage.setItem(KEY, JSON.stringify(o)) : localStorage.removeItem(KEY); } catch (e) {} };
+
+  /* ---- calculadora de prazo ---- */
+  const TOTAL = 48750.00;
+  // 120 dias é grátis; liberar em 30 dias custa R$ 2.317,00 (proporcional por dia adiantado)
+  const PRAZO_PADRAO = 120, PRAZO_REF = 30, CUSTO_REF = 2317;
+  const POR_DIA = CUSTO_REF / (PRAZO_PADRAO - PRAZO_REF);
+  const BASE = new Date(2026, 10, 2);                 // pedido solicitado em 02/11/2026
+  const dSlider = $('dSlider'), dInput = $('dInput');
+  const calc = { prazo: PRAZO_PADRAO, adv: 0, tarifa: 0, net: TOTAL, dateStr: '' };
 
   ['totalHead','vTotal'].forEach(id => $(id).textContent = brl(TOTAL));
   $('dNote').textContent = 'Liberar em ' + PRAZO_REF + ' dias custa ' + brl(CUSTO_REF) + '. Valor proporcional: ≈ ' + brl(POR_DIA) + ' por dia adiantado. Simulação fictícia.';
@@ -436,13 +525,14 @@
   function simPrazo(){
     const prazo = Math.min(PRAZO_PADRAO, Math.max(0, +dSlider.value));
     const adv = PRAZO_PADRAO - prazo;
-    tarifa = Math.round(adv * POR_DIA * 100) / 100;
+    const tarifa = Math.round(adv * POR_DIA * 100) / 100;
     const conclusao = new Date(BASE); conclusao.setDate(conclusao.getDate() + prazo);
+    Object.assign(calc, { prazo, adv, tarifa, net: TOTAL - tarifa, dateStr: prazo === 0 ? 'Hoje' : fmtData(conclusao) });
 
     $('dAdv').textContent = prazo === 0 ? 'Hoje' : fmtDias(prazo);
     $('dPct').textContent = adv === 0 ? 'Grátis' : '-' + adv + ' d';
     $('dDiff').textContent = fmtDias(adv);
-    $('dDate').textContent = prazo === 0 ? 'Hoje' : fmtData(conclusao);
+    $('dDate').textContent = calc.dateStr;
     const cost = $('dCost');
     cost.textContent = adv === 0 ? 'Grátis' : brl(tarifa);
     cost.classList.toggle('free', adv === 0);
@@ -450,28 +540,13 @@
     if (document.activeElement !== dInput) dInput.value = prazo;
     document.querySelectorAll('#dChips .chip').forEach(c => c.classList.toggle('on', +c.dataset.d === prazo));
 
-    // reflete no resumo e nos valores
     $('vPrazo').textContent = prazo === 0 ? 'Imediato' : fmtDias(prazo);
     $('vTarifa').textContent = brl(tarifa);
-    $('vTotal2').textContent = brl(TOTAL - tarifa);
-    simValor();
+    $('vTotal2').textContent = brl(calc.net);
   }
-
-  function simValor(){
-    const p = +slider.value;
-    const adv = TOTAL * p / 100, fee = adv * FEE;
-    $('vPct').textContent = p + '%';
-    $('vAdv').textContent = brl(adv);
-    $('vFee').textContent = brl(fee);
-    $('vNow').textContent = brl(adv - fee);
-    $('vRest').textContent = brl(TOTAL - adv - tarifa);
-    slider.style.setProperty('--p', (p / 70 * 100) + '%');
-    document.querySelectorAll('#chips .chip').forEach(c => c.classList.toggle('on', +c.dataset.p === p));
-  }
-
   dSlider.addEventListener('input', simPrazo);
   dInput.addEventListener('input', () => {
-    if (dInput.value === '') return;                       // permite apagar para digitar de novo
+    if (dInput.value === '') return;
     let v = Math.round(+dInput.value);
     if (isNaN(v)) return;
     if (v > PRAZO_PADRAO) { v = PRAZO_PADRAO; dInput.value = v; }
@@ -480,19 +555,99 @@
   });
   dInput.addEventListener('blur', () => { dInput.value = dSlider.value; });
   document.querySelectorAll('#dChips .chip').forEach(c => c.addEventListener('click', () => { dSlider.value = c.dataset.d; simPrazo(); }));
-  slider.addEventListener('input', simValor);
-  document.querySelectorAll('#chips .chip').forEach(c => c.addEventListener('click', () => { slider.value = c.dataset.p; simValor(); }));
   simPrazo();
 
+  /* ---- navegação entre telas (hash) ---- */
+  const ROUTES = { '': 'home', '#/transferencia': 'transfer', '#/resumo': 'confirm', '#/senha': 'pass', '#/concluido': 'done' };
+  const PARENT = { transfer: '', confirm: '#/transferencia', pass: '#/resumo', done: '' };
+  const VIEWS = ['home','transfer','confirm','pass','done'];
+  let inApp = false, timerId = null;
+
+  function go(hash){ inApp = true; location.hash = hash; }
+
+  function route(){
+    let name = ROUTES[location.hash] || 'home';
+    if (name === 'done' && !order) name = 'home';
+    VIEWS.forEach(v => $(v).hidden = v !== name);
+    stopTimer();
+    if (name === 'home') updateBanner();
+    if (name === 'confirm') fillConfirm();
+    if (name === 'pass') { $('pwd').value = ''; $('pwd').type = 'password'; $('authorize').disabled = true; }
+    if (name === 'done') startTimer();
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+
+  document.querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', () => {
+    const view = VIEWS.find(v => !$(v).hidden);
+    if (inApp) history.back(); else location.hash = PARENT[view] || '';
+  }));
+
+  $('openTransfer').addEventListener('click', () => go(order ? '#/concluido' : '#/transferencia'));
+  $('goConfirm').addEventListener('click', () => go('#/resumo'));
+  $('goPass').addEventListener('click', () => go('#/senha'));
+
+  function fillConfirm(){
+    $('cNet').textContent = brl(calc.net);
+    $('cNet2').textContent = brl(calc.net);
+    $('cPrazo').textContent = calc.prazo === 0 ? 'Hoje' : fmtDias(calc.prazo);
+    $('cDate').textContent = calc.dateStr;
+    $('cTotal').textContent = brl(TOTAL);
+    $('cTarifa').textContent = calc.tarifa === 0 ? 'Grátis' : brl(calc.tarifa);
+  }
+
+  /* ---- senha (qualquer senha é aceita) ---- */
+  const pwd = $('pwd');
+  pwd.addEventListener('input', () => { $('authorize').disabled = pwd.value.length === 0; });
+  pwd.addEventListener('keydown', e => { if (e.key === 'Enter' && pwd.value) $('authorize').click(); });
+  $('pwdToggle').addEventListener('click', () => { pwd.type = pwd.type === 'password' ? 'text' : 'password'; });
+  $('authorize').addEventListener('click', () => {
+    if (!pwd.value) return;
+    saveOrder({ deadline: Date.now() + HORAS_12, prazo: calc.prazo, dateStr: calc.dateStr, net: calc.net });
+    pwd.value = '';
+    location.replace('#/concluido');          // troca a entrada do histórico: o voltar não reabre a senha
+    route();
+  });
+
+  /* ---- tela de conclusão + contagem regressiva ---- */
+  function tick(){
+    if (!order) return;
+    const left = Math.max(0, order.deadline - Date.now());
+    const h = Math.floor(left / 3600000), m = Math.floor(left % 3600000 / 60000), s = Math.floor(left % 60000 / 1000);
+    $('timer').textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+    $('timerBar').style.width = ((1 - left / HORAS_12) * 100) + '%';
+    const fim = left === 0;
+    $('dnTitle').textContent = fim ? 'Pagamento gerado!' : 'Transferência solicitada!';
+    $('dnMsg').innerHTML = fim ? 'O pagamento da sua migração já está disponível.' : 'O pagamento será gerado em até <b>12 horas</b>.';
+    $('dnLabel').textContent = fim ? 'Prazo concluído' : 'Tempo restante para gerar o pagamento';
+    if (fim) stopTimer();
+  }
+  function startTimer(){
+    $('nPrazo').textContent = order.prazo === 0 ? 'Hoje' : fmtDias(order.prazo);
+    $('nDate').textContent = order.dateStr;
+    $('nNet').textContent = brl(order.net);
+    tick(); stopTimer(); timerId = setInterval(tick, 1000);
+  }
+  function stopTimer(){ if (timerId) { clearInterval(timerId); timerId = null; } }
+  $('toHome').addEventListener('click', () => { inApp = false; location.hash = ''; });
+  $('resetSim').addEventListener('click', () => { saveOrder(null); inApp = false; location.replace('#'); route(); });
+
+  /* ---- banner da home ---- */
+  function updateBanner(){
+    $('bTitle').textContent = order ? 'Transferência em andamento' : 'Você tem um pedido de transferência pendente';
+    $('bSub').textContent = order ? 'Pagamento será gerado em até 12 horas' : 'Migração da conta PJ de outro banco';
+  }
+
+  route();
+
   /* ---- versão ---- */
-  const APP_VERSION = 'v6';
+  const APP_VERSION = 'v7';
   document.querySelectorAll('.js-ver').forEach(e => e.textContent = 'Verdepay Empresas · ' + APP_VERSION);
 
   /* ---- PWA: atualização automática ---- */
   if ('serviceWorker' in navigator) {
     const hadController = !!navigator.serviceWorker.controller;
     let reloading = false;
-    // quando uma versão nova assume o controle, recarrega a tela uma única vez
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!hadController || reloading) return;
       reloading = true; location.reload();
