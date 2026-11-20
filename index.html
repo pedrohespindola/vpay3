@@ -97,6 +97,10 @@
   .quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
   .q{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
   .q .tile{width:100%;aspect-ratio:1/0.85;border-radius:20px;background:var(--tile);display:grid;place-items:center}
+  .availability-tag{display:inline-flex;align-items:center;justify-content:center;margin-top:5px;padding:3px 7px;border-radius:999px;background:#e8f4ed;color:#176b45;font-size:9px;font-weight:700;line-height:1.2;white-space:nowrap}
+  .q .availability-tag{margin-top:4px}
+  .pix-action .availability-tag{font-size:9px}
+  .pix-demo-link{border:0;background:transparent;color:#176b45;text-decoration:underline;font:inherit;font-weight:700;padding:0;cursor:pointer}
   .q .tile svg{width:26px;height:26px;stroke:#2b2b2b;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
   .q.primary .tile{background:var(--green-800)}
   .q.primary .tile svg{stroke:#fff}
@@ -216,6 +220,95 @@
   .bar{height:8px;border-radius:4px;background:#e2e2e2;overflow:hidden;margin-top:16px}
   .bar i{display:block;height:100%;width:0;background:var(--green-800);border-radius:4px;transition:width .6s linear}
   .linkbtn{height:36px;font-size:13px;color:var(--muted);text-align:center;text-decoration:underline;text-underline-offset:3px}
+
+
+  /* =============== ÁREA PIX =============== */
+  .pix-head{background:var(--green-800);color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 16px 24px;border-radius:0 0 28px 28px}
+  .pix-head .t-bar{margin-bottom:22px}
+  .pix-balance-label{font-size:13px;opacity:.82}
+  .pix-balance{font-size:30px;font-weight:700;letter-spacing:-.7px;margin-top:4px}
+  .pix-main{padding:18px 16px 120px;display:flex;flex-direction:column;gap:18px}
+  .pix-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .pix-action{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 14px;display:flex;align-items:center;gap:12px;min-height:82px}
+  .pix-action .pix-icon{width:42px;height:42px;border-radius:13px;background:#e4f1e9;display:grid;place-items:center;flex:none}
+  .pix-action .pix-icon svg{width:22px;height:22px;stroke:var(--green-800);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pix-action b{display:block;font-size:14px;font-weight:600}
+  .pix-action small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px;line-height:1.25}
+  .pix-section-title{font-size:18px;font-weight:650;letter-spacing:-.3px;margin-bottom:10px}
+  .pix-key{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;align-items:center;gap:12px}
+  .pix-key .pix-icon{width:40px;height:40px;border-radius:12px;background:var(--tile);display:grid;place-items:center;flex:none}
+  .pix-key .pix-icon svg{width:21px;height:21px;stroke:#333;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pix-key-info{flex:1;min-width:0}
+  .pix-key-info small{display:block;color:var(--muted);font-size:11.5px}
+  .pix-key-info b{display:block;font-size:13px;margin-top:4px;overflow-wrap:anywhere}
+  .pix-copy{width:36px;height:36px;border-radius:50%;background:var(--tile);display:grid;place-items:center;flex:none}
+  .pix-copy svg{width:18px;height:18px;stroke:#333;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .pix-info{background:#f1f8f4;border:1px solid #cfe5d8;border-radius:16px;padding:14px;font-size:12.5px;line-height:1.45;color:#2d4a3a}
+  .pix-info b{font-weight:650}
+  .pix-send-main{padding:20px 16px 120px;display:flex;flex-direction:column;gap:18px}
+  .pix-send-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:16px}
+  .pix-send-field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+  .pix-send-field input{
+    display:block;position:relative;z-index:2;pointer-events:auto;user-select:text;-webkit-user-select:text;
+    width:100%;height:54px;border:1px solid #dcdcdc;border-radius:12px;padding:0 14px;
+    font-family:inherit;font-size:16px;font-weight:400;line-height:normal;color:var(--ink);
+    outline:none;background:#fff;opacity:1;touch-action:manipulation;
+  }
+  .pix-send-field input:focus{border-color:var(--green-800);box-shadow:0 0 0 3px rgba(10,74,44,.10)}
+  .pix-send-field input::placeholder{color:#999;opacity:1}
+  .pix-send-field{position:relative;z-index:1}
+
+  .pix-send-hint{font-size:12px;color:var(--muted);line-height:1.45;margin-top:6px}
+  .pix-send-primary{width:100%;height:52px;border-radius:14px;background:var(--green-800);color:#fff;font-size:15px;font-weight:650;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;line-height:1}
+  .pix-send-primary:disabled{opacity:.45;cursor:not-allowed}
+  .pix-send-alert{display:none;background:#fff7e8;border:1px solid #efd7a6;color:#664b18;border-radius:14px;padding:15px;font-size:13px;line-height:1.5}
+  .pix-send-alert.show{display:block}
+  .pix-send-password{display:none}
+  .pix-send-password.show{display:block}
+  .pix-send-success{display:none;background:#f1f8f4;border:1px solid #cfe5d8;border-radius:14px;padding:15px;color:#2d4a3a;font-size:13px;line-height:1.5}
+  .pix-send-success.show{display:block}
+
+
+  /* Etapa de conferência do destinatário e popup de senha */
+  .pix-step-divider{height:1px;background:var(--line);margin:4px 0 16px}
+  .pix-recipient-title{font-size:16px;font-weight:650;margin-bottom:6px}
+  .pix-recipient-summary{display:grid;grid-template-columns:1fr;gap:4px;background:#f5f7f5;border:1px solid var(--line);border-radius:13px;padding:12px;margin:14px 0}
+  .pix-recipient-summary span{font-size:11px;color:var(--muted)}
+  .pix-recipient-summary b{font-size:13px;font-weight:600;overflow-wrap:anywhere;margin-bottom:7px}
+  .pix-recipient-summary b:last-child{margin-bottom:0}
+  .pix-recipient-back{width:100%;min-height:42px;text-align:center;color:var(--green-800);font-size:13px;font-weight:600;margin-top:5px}
+  .pix-modal[hidden]{display:none!important}
+  .pix-modal{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .pix-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
+  .pix-modal-dialog{position:relative;z-index:1;width:100%;max-width:390px;background:#fff;border-radius:22px;padding:26px 20px 18px;box-shadow:0 18px 60px rgba(0,0,0,.24);text-align:center}
+  .pix-modal-close{position:absolute;right:12px;top:8px;width:36px;height:36px;border-radius:50%;font-size:26px;color:var(--muted);display:grid;place-items:center}
+  .pix-modal-lock{width:58px;height:58px;border-radius:50%;background:#e4f1e9;display:grid;place-items:center;margin:0 auto 14px}
+  .pix-modal-lock svg{width:27px;height:27px;stroke:var(--green-800);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .pix-modal-dialog h3{font-size:19px;font-weight:700}
+  .pix-modal-description{font-size:13px;line-height:1.45;color:var(--muted);margin:7px 0 18px}
+  .pix-modal-field{text-align:left;margin-bottom:10px}
+  .pix-modal-field input{display:block;width:100%;height:50px;border:1px solid #dcdcdc;border-radius:12px;padding:0 13px;font:inherit;font-size:16px;color:var(--ink);background:#fff;outline:none}
+  .pix-modal-field input:focus{border-color:var(--green-800);box-shadow:0 0 0 3px rgba(10,74,44,.10)}
+  .pix-modal-error{min-height:18px;color:#a12a2a;font-size:12px;text-align:left;margin-bottom:8px}
+  body.pix-modal-open{overflow:hidden}
+
+
+  /* Configuração discreta para apresentações do protótipo */
+  .demo-config-modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px}
+  .demo-config-modal[hidden]{display:none!important}
+  .demo-config-dialog{position:relative;z-index:1;width:100%;max-width:390px;background:#fff;border-radius:20px;padding:24px 20px 18px;box-shadow:0 18px 60px rgba(0,0,0,.24)}
+  .demo-config-dialog h3{font-size:18px;margin:0 34px 7px 0}
+  .demo-config-dialog p{font-size:12px;color:var(--muted);line-height:1.45;margin:0 0 18px}
+  .demo-config-field{margin-bottom:14px}
+  .demo-config-field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+  .demo-config-field input{display:block;width:100%;height:48px;border:1px solid #dcdcdc;border-radius:11px;padding:0 12px;font:inherit;font-size:15px;color:var(--ink);background:#fff;outline:none}
+  .demo-config-field input:focus{border-color:var(--green-800);box-shadow:0 0 0 3px rgba(10,74,44,.10)}
+  .demo-config-actions{display:flex;gap:10px;margin-top:18px}
+  .demo-config-actions button{flex:1;min-height:46px;border-radius:12px;font-size:14px;font-weight:650}
+  .demo-config-save{background:var(--green-800);color:#fff}
+  .demo-config-cancel{background:#f1f3f1;color:var(--ink)}
+  .demo-config-status{font-size:12px;color:var(--green-800);min-height:16px;margin-top:10px}
+
 </style>
 </head>
 <body>
@@ -247,11 +340,7 @@
       <section class="card">
         <div class="row"><span>Conta</span><button class="link">Ver extrato
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div>
-        <h2>Saldo em Conta<strong>R$ 0,00</strong></h2>
-        <div class="balance-line">
-          <p class="future">Lançamentos futuros: <b>R$ 11.288,21</b></p>
-          <button class="eye" aria-label="Ocultar saldo"><svg viewBox="0 0 24 24"><path d="M3 10c3 4 15 4 18 0M6 14l-1.500 2.500M10 15.500l-.7 3M14 15.500l.7 3M18 14l1.500 2.500"/></svg></button>
-        </div>
+        <h2>Saldo em Conta<strong>R$ 16.527,10</strong></h2>
         <button class="btn-light">Adicionar dinheiro</button>
       </section>
       <section class="card alt">
@@ -272,34 +361,28 @@
     <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
   </header>
 
-  <!-- Banner: pedido de transferência pendente -->
-  <button class="banner" id="openTransfer">
-    <span class="mini"><svg viewBox="0 0 24 24"><path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/></svg></span>
-    <span><span id="bTitle">Você tem um pedido de transferência pendente</span><small id="bSub">Migração da conta PJ de outro banco</small></span>
-    <svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-  </button>
 
   <main>
     <h3 class="sec">No dia a dia</h3>
     <div class="quick">
       <div class="q primary">
-        <button class="tile" aria-label="Pix"><svg viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="3.200" transform="rotate(45 12 12)"/><path d="M8.500 12l2.300-2.300a1.600 1.600 0 0 1 2.400 0L15.500 12l-2.300 2.300a1.600 1.600 0 0 1-2.400 0z"/></svg></button>
+        <button class="tile" id="openPix" aria-label="Pix"><svg viewBox="0 0 24 24"><rect x="5.5" y="5.5" width="13" height="13" rx="3.200" transform="rotate(45 12 12)"/><path d="M8.500 12l2.300-2.300a1.600 1.600 0 0 1 2.400 0L15.500 12l-2.300 2.300a1.600 1.600 0 0 1-2.400 0z"/></svg></button>
         <span class="slot"><span class="tag">NO CARTÃO</span></span>
         <label>Pix</label>
       </div>
       <div class="q">
         <button class="tile" aria-label="Pagar"><svg viewBox="0 0 24 24"><path d="M5 5v14M8.500 5v14M12 5v14M15 5v14M18.500 5v14"/></svg></button>
-        <span class="slot"></span>
+        <span class="slot"><span class="availability-tag">Disponível em 7 dias</span></span>
         <label>Pagar</label>
       </div>
       <div class="q">
         <button class="tile" aria-label="Cofrinhos"><svg viewBox="0 0 24 24"><path d="M5 11a6 5 0 0 1 6-5h3.500a5 5 0 0 1 4.500 3l2-.5v4l-1.800.5A5 5 0 0 1 16.500 17v2.500h-3V18h-3v1.500h-3V17A6 5 0 0 1 5 11zM14 9.500h.01M9 5.500a1.700 1.700 0 1 1 0 .01"/></svg></button>
-        <span class="slot"></span>
+        <span class="slot"><span class="availability-tag">Disponível em 7 dias</span></span>
         <label>Cofrinhos</label>
       </div>
       <div class="q">
         <button class="tile" aria-label="Cartão"><svg viewBox="0 0 24 24"><rect x="3" y="5.500" width="18" height="13" rx="3"/><path d="M3 10h18"/></svg></button>
-        <span class="slot"><span class="tag">1% CASHBACK</span></span>
+        <span class="slot"><span class="tag">1% CASHBACK</span><br><span class="availability-tag">Disponível em 7 dias</span></span>
         <label>Cartão</label>
       </div>
     </div>
@@ -319,9 +402,130 @@
     <button class="on" aria-label="Início"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg></button>
     <button><svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5M5 10v8M9.500 10v8M14.500 10v8M19 10v8M3 20h18"/></svg>Conta</button>
     <button><svg viewBox="0 0 24 24"><rect x="3" y="5.500" width="18" height="13" rx="3"/><path d="M3 10h18"/></svg>Cartão</button>
-    <button><svg viewBox="0 0 24 24"><path d="M16.500 7.500c-.8-1.500-2.400-2.200-4.500-2.200-2.700 0-4.300 1.200-4.300 3 0 4.200 9 1.800 9 6.200 0 1.900-1.800 3.200-4.600 3.200-2.300 0-4-.8-4.800-2.400M12 3v18"/></svg>Cobranças</button>
+    <button id="openDemoConfig" type="button"><svg viewBox="0 0 24 24"><path d="M16.500 7.500c-.8-1.500-2.400-2.200-4.500-2.200-2.700 0-4.300 1.200-4.300 3 0 4.200 9 1.800 9 6.200 0 1.900-1.800 3.200-4.600 3.200-2.300 0-4-.8-4.800-2.400M12 3v18"/></svg>Cobranças</button>
     <button><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu</button>
   </nav>
+</div>
+
+<!-- ====================== ÁREA PIX ====================== -->
+<div class="app" id="pix" hidden>
+  <header class="pix-head">
+    <div class="t-bar">
+      <button class="back" data-back aria-label="Voltar ao início"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h1>Área Pix</h1>
+    </div>
+    <p class="pix-balance-label">Saldo disponível para Pix</p>
+    <p class="pix-balance">R$ 16.527,10</p>
+  </header>
+  <main class="pix-main">
+    <section>
+      <h3 class="pix-section-title">O que você deseja fazer?</h3>
+      <div class="pix-actions">
+        <button class="pix-action" type="button" id="openSendPix">
+          <span class="pix-icon"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+          <span><b>Enviar Pix</b><small>Transferir para outra pessoa</small></span>
+        </button>
+        <button class="pix-action" type="button" data-pix-action="Receber Pix">
+          <span class="pix-icon"><svg viewBox="0 0 24 24"><path d="M17 7 7 17M17 17H7V7"/></svg></span>
+          <span><b>Receber Pix</b><span class="availability-tag">Disponível em 7 dias</span><small>Gerar cobrança ou QR Code</small></span>
+        </button>
+        <button class="pix-action" type="button" data-pix-action="Pix copia e cola">
+          <span class="pix-icon"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></span>
+          <span><b>Pix copia e cola</b><span class="availability-tag">Disponível em 7 dias</span><small>Pagar com código Pix</small></span>
+        </button>
+        <button class="pix-action" type="button" data-pix-action="Extrato Pix">
+          <span class="pix-icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></span>
+          <span><b>Extrato Pix</b><span class="availability-tag">Disponível em 7 dias</span><small>Consultar movimentações</small></span>
+        </button>
+      </div>
+    </section>
+    <section>
+      <h3 class="pix-section-title">Minhas chaves Pix</h3>
+      <div class="pix-key">
+        <span class="pix-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8.5 12h7M12 8.5v7"/></svg></span>
+        <span class="pix-key-info"><small>CNPJ</small><b>43.779.233/0001-47</b></span>
+        <button class="pix-copy" id="copyPixKey" type="button" aria-label="Copiar chave Pix"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ====================== ENVIAR PIX ====================== -->
+<div class="app" id="pixSend" hidden>
+  <header class="pix-head">
+    <div class="t-bar">
+      <button class="back" data-back aria-label="Voltar para a área Pix"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h1>Enviar Pix</h1>
+    </div>
+    <p class="pix-balance-label">Saldo disponível para Pix</p>
+    <p class="pix-balance">R$ 16.527,10</p>
+  </header>
+  <main class="pix-send-main">
+    <div>
+      <h3 class="pix-section-title">Para quem deseja enviar?</h3>
+      <p class="pix-send-hint">Informe a chave Pix do destinatário e o valor da transferência.</p>
+    </div>
+    <section class="pix-send-card">
+      <div class="pix-send-field">
+        <label for="sendPixKey">Chave Pix do destinatário</label>
+        <input id="sendPixKey" type="text" placeholder="CPF, CNPJ, e-mail, telefone ou chave aleatória" autocomplete="off">
+      </div>
+      <div class="pix-send-field">
+        <label for="sendPixAmount">Valor da transferência</label>
+        <input id="sendPixAmount" type="number" min="0.01" step="0.01" placeholder="R$ 0,00" inputmode="decimal">
+      </div>
+      <button class="pix-send-primary" id="continuePixSend" type="button"><span>Continuar</span></button>
+      <div id="pixRecipientStep" hidden>
+        <div class="pix-step-divider"></div>
+        <h4 class="pix-recipient-title">Confirme os dados de quem vai receber</h4>
+        <p class="pix-send-hint">Confira os dados do destinatário identificados nesta simulação.</p>
+        <div class="pix-recipient-summary">
+          <span>Nome do destinatário</span><b id="reviewPixRecipient">Identificando...</b>
+          <span>Instituição financeira</span><b id="reviewPixBank">Identificando...</b>
+          <span>Chave Pix</span><b id="reviewPixKey">Não informada</b>
+          <span>Valor da transferência</span><b id="reviewPixAmount">R$ 0,00</b>
+        </div>
+        <button class="pix-send-primary" id="confirmPixRecipient" type="button"><span>Confirmar destinatário</span></button>
+        <button class="pix-recipient-back" id="editPixDetails" type="button">Voltar e editar chave ou valor</button>
+      </div>
+      <div class="pix-send-alert" id="pixDemoAlert" role="alert" aria-live="polite">
+        <button class="pix-demo-link" id="openDeadlineCalculator" type="button">Clique aqui.</button> Sua conta foi recém migrada e ainda não há autorização para realizar transferências para pessoas físicas, clique aqui e programe a migração da sua conta para realizar transferências no modo PJ e modo PF
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Popup de senha para confirmação do Pix -->
+<div class="pix-modal" id="pixPasswordModal" hidden aria-hidden="true">
+  <div class="pix-modal-backdrop" data-close-pix-modal></div>
+  <section class="pix-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="pixModalTitle">
+    <button class="pix-modal-close" id="closePixPassword" type="button" aria-label="Fechar">×</button>
+    <div class="pix-modal-lock"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div>
+    <h3 id="pixModalTitle">Confirme sua senha</h3>
+    <p class="pix-modal-description">Digite sua senha para avançar com a simulação do Pix.</p>
+    <div class="pix-send-field pix-modal-field">
+      <label for="sendPixPassword">Senha de confirmação</label>
+      <input id="sendPixPassword" type="password" placeholder="Digite sua senha" autocomplete="off">
+    </div>
+    <p class="pix-modal-error" id="pixPasswordError" aria-live="polite"></p>
+    <button class="pix-send-primary" id="confirmPixSend" type="button"><span>Enviar Pix</span></button>
+    <button class="pix-recipient-back" id="cancelPixPassword" type="button">Cancelar</button>
+  </section>
+</div>
+
+
+<!-- Painel de configuração reservado para apresentação do protótipo. Abre pelo item Cobranças. -->
+<div class="demo-config-modal" id="demoConfigModal" hidden aria-hidden="true">
+  <div class="pix-modal-backdrop" data-close-demo-config></div>
+  <section class="demo-config-dialog" role="dialog" aria-modal="true" aria-labelledby="demoConfigTitle">
+    <button class="pix-modal-close" id="closeDemoConfig" type="button" aria-label="Fechar">×</button>
+    <h3 id="demoConfigTitle">Configuração da demonstração</h3>
+    <p>Defina o nome e o banco que serão exibidos automaticamente como dados do destinatário na simulação Pix.</p>
+    <div class="demo-config-field"><label for="demoRecipientName">Nome do destinatário</label><input id="demoRecipientName" type="text" placeholder="Ex.: Mariana Oliveira Santos" autocomplete="off"></div>
+    <div class="demo-config-field"><label for="demoRecipientBank">Banco do destinatário</label><input id="demoRecipientBank" type="text" placeholder="Ex.: Banco do Brasil" autocomplete="off"></div>
+    <div class="demo-config-actions"><button class="demo-config-cancel" id="cancelDemoConfig" type="button">Cancelar</button><button class="demo-config-save" id="saveDemoConfig" type="button">Salvar</button></div>
+    <div class="demo-config-status" id="demoConfigStatus" aria-live="polite"></div>
+  </section>
 </div>
 
 <!-- ====================== TRANSFERÊNCIA ====================== -->
@@ -332,18 +536,18 @@
       <h1>Transferência de conta</h1>
     </div>
     <span class="status"><i></i>Pedido pendente</span>
-    <p class="lbl">Valor que virá da outra conta</p>
-    <p class="amount" id="totalHead">R$ 11.288,21</p>
-    <p class="sub">Migração de titularidade PJ<br>Protocolo VP-2026-004871</p>
+    <p class="lbl">Valor a ser transacionado PF</p>
+    <p class="amount" id="totalHead">R$ 16.527,10</p>
+    
   </header>
 
   <div class="t-body">
     <section class="box">
       <h4>Resumo do pedido</h4>
       <div class="route">
-        <div class="end"><small>Origem</small><b>Nu Pagamentos S.A.</b><span>Ag. 0001 · CC · 398508750-4</span></div>
+        <div class="end"><small>Origem</small><b>PicPay PJ</b><span>Conta PJ de origem</span></div>
         <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <div class="end to"><small>Destino</small><b>PicPay PJ</b><span>Conta nova</span></div>
+        <div class="end to"><small>Destino</small><b>PicPay PJ</b><span>Transação PJ + PF</span></div>
       </div>
       <div style="height:8px"></div>
       <div class="kv"><span>Titular</span><b>PH SERVIÇOS DE TECNOLOGIA</b></div>
@@ -386,7 +590,7 @@
 
     <section class="box">
       <h4>Valores da transferência</h4>
-      <div class="kv"><span>Saldo da conta de origem</span><b id="vTotal">R$ 11.288,21</b></div>
+      <div class="kv"><span>Valor transacionado PF</span><b id="vTotal">R$ 11.288,21</b></div>
       <div class="kv"><span>Tarifa de migração</span><b id="vTarifa">R$ 0,00</b></div>
       
     </section>
@@ -413,9 +617,9 @@
   <div class="view-pad">
     <section class="box">
       <h4>Resumo do pedido</h4>
-      <div class="kv"><span>Tipo</span><b>Migração de titularidade PJ</b></div>
-      <div class="kv"><span>Origem</span><b>Nu Pagamentos S.A.<br><small style="font-weight:400;color:var(--muted)">Ag. 0001 · CC · 398508750-4</small></b></div>
-      <div class="kv"><span>Destino</span><b>PicPay PJ</b></div>
+      <div class="kv"><span>Tipo</span><b>Mudança de modo de transação</b></div>
+      <div class="kv"><span>Origem</span><b>PicPay PJ</b></div>
+      <div class="kv"><span>Destino</span><b>PicPay PJ, Transação PJ + PF</b></div>
       <div class="kv"><span>Titular</span><b>PH SERVIÇOS DE TECNOLOGIA</b></div>
       <div class="kv"><span>CNPJ</span><b>43.779.233/0001-47</b></div>
     </section>
@@ -475,7 +679,7 @@
     </section>
     <section class="box">
       <h4>Resumo</h4>
-      <div class="kv"><span>Protocolo</span><b>VP-2026-004871</b></div>
+      <div class="kv"><span>Protocolo</span><b>VP-2026-009326</b></div>
       <div class="kv"><span>Liberação em</span><b id="nPrazo">—</b></div>
       <div class="kv"><span>Conclusão prevista</span><b id="nDate">—</b></div>
       <div class="kv total"><span>Você recebe</span><b id="nNet">R$ 11.288,21</b></div>
@@ -511,10 +715,14 @@
   const saveOrder = o => { order = o; try { o ? localStorage.setItem(KEY, JSON.stringify(o)) : localStorage.removeItem(KEY); } catch (e) {} };
 
   /* ---- calculadora de prazo ---- */
-  const TOTAL = 48750.00;
-  // 120 dias é grátis; liberar em 30 dias custa R$ 2.317,00 (proporcional por dia adiantado)
-  const PRAZO_PADRAO = 120, PRAZO_REF = 30, CUSTO_REF = 2317;
-  const POR_DIA = CUSTO_REF / (PRAZO_PADRAO - PRAZO_REF);
+  const TOTAL = 11288.21;
+  // Tarifas simuladas e proporcionais entre os três pontos de referência:
+  // 120 dias = R$ 0,00; 30 dias = R$ 3.311,00; hoje = máximo de R$ 4.212,00.
+  const PRAZO_PADRAO = 120, PRAZO_REF = 30, CUSTO_REF = 3311, CUSTO_MAX = 4212;
+  function tarifaPorPrazo(prazo){
+    if (prazo >= PRAZO_REF) return (PRAZO_PADRAO - prazo) / (PRAZO_PADRAO - PRAZO_REF) * CUSTO_REF;
+    return CUSTO_REF + (PRAZO_REF - prazo) / PRAZO_REF * (CUSTO_MAX - CUSTO_REF);
+  }
   const BASE = new Date(2026, 10, 2);                 // pedido solicitado em 02/11/2026
   const dSlider = $('dSlider'), dInput = $('dInput');
   const calc = { prazo: PRAZO_PADRAO, adv: 0, tarifa: 0, net: TOTAL, dateStr: '' };
@@ -524,7 +732,7 @@
   function simPrazo(){
     const prazo = Math.min(PRAZO_PADRAO, Math.max(0, +dSlider.value));
     const adv = PRAZO_PADRAO - prazo;
-    const tarifa = Math.round(adv * POR_DIA * 100) / 100;
+    const tarifa = Math.round(tarifaPorPrazo(prazo) * 100) / 100;
     const conclusao = new Date(BASE); conclusao.setDate(conclusao.getDate() + prazo);
     Object.assign(calc, { prazo, adv, tarifa, net: TOTAL - tarifa, dateStr: prazo === 0 ? 'Hoje' : fmtData(conclusao) });
 
@@ -540,6 +748,7 @@
     document.querySelectorAll('#dChips .chip').forEach(c => c.classList.toggle('on', +c.dataset.d === prazo));
 
     $('vPrazo').textContent = prazo === 0 ? 'Imediato' : fmtDias(prazo);
+    $('vTotal').textContent = brl(TOTAL);
     $('vTarifa').textContent = brl(tarifa);
   
   }
@@ -557,9 +766,9 @@
   simPrazo();
 
   /* ---- navegação entre telas (hash) ---- */
-  const ROUTES = { '': 'home', '#/transferencia': 'transfer', '#/resumo': 'confirm', '#/senha': 'pass', '#/concluido': 'done' };
-  const PARENT = { transfer: '', confirm: '#/transferencia', pass: '#/resumo', done: '' };
-  const VIEWS = ['home','transfer','confirm','pass','done'];
+  const ROUTES = { '': 'home', '#/pix': 'pix', '#/pix/enviar': 'pixSend', '#/transferencia': 'transfer', '#/resumo': 'confirm', '#/senha': 'pass', '#/concluido': 'done' };
+  const PARENT = { pix: '', pixSend: '#/pix', transfer: '', confirm: '#/transferencia', pass: '#/resumo', done: '' };
+  const VIEWS = ['home','pix','pixSend','transfer','confirm','pass','done'];
   let inApp = false, timerId = null;
 
   function go(hash){ inApp = true; location.hash = hash; }
@@ -569,7 +778,7 @@
     if (name === 'done' && !order) name = 'home';
     VIEWS.forEach(v => $(v).hidden = v !== name);
     stopTimer();
-    if (name === 'home') updateBanner();
+    if (name === 'home' && typeof updateBanner === 'function') updateBanner();
     if (name === 'confirm') fillConfirm();
     if (name === 'pass') { $('pwd').value = ''; $('pwd').type = 'password'; $('authorize').disabled = true; }
     if (name === 'done') startTimer();
@@ -579,16 +788,140 @@
 
   document.querySelectorAll('[data-back]').forEach(b => b.addEventListener('click', () => {
     const view = VIEWS.find(v => !$(v).hidden);
+    if (view === 'pixSend') { go('#/pix'); return; }
+    if (view === 'pix') { go(''); return; }
     if (inApp) history.back(); else location.hash = PARENT[view] || '';
   }));
 
-  $('openTransfer').addEventListener('click', () => go(order ? '#/concluido' : '#/transferencia'));
+  const openTransfer = $('openTransfer');
+  if (openTransfer) openTransfer.addEventListener('click', () => go(order ? '#/concluido' : '#/transferencia'));
+  $('openPix').addEventListener('click', () => go('#/pix'));
+  $('openDeadlineCalculator').addEventListener('click', () => go('#/transferencia'));
+  $('openSendPix').addEventListener('click', () => {
+    go('#/pix/enviar');
+  });
+
+  // Configuração local da demonstração, acessível pelo item Cobranças na navegação principal.
+  const demoConfigModal = $('demoConfigModal');
+  let demoPixConfig = { name: '', bank: '' };
+  function openDemoConfig(){
+    $('demoRecipientName').value = demoPixConfig.name;
+    $('demoRecipientBank').value = demoPixConfig.bank;
+    $('demoConfigStatus').textContent = '';
+    demoConfigModal.hidden = false;
+    demoConfigModal.setAttribute('aria-hidden','false');
+    document.body.classList.add('pix-modal-open');
+    setTimeout(() => $('demoRecipientName').focus(), 30);
+  }
+  function closeDemoConfig(){
+    demoConfigModal.hidden = true;
+    demoConfigModal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('pix-modal-open');
+  }
+  $('openDemoConfig').addEventListener('click', openDemoConfig);
+  $('closeDemoConfig').addEventListener('click', closeDemoConfig);
+  $('cancelDemoConfig').addEventListener('click', closeDemoConfig);
+  demoConfigModal.querySelectorAll('[data-close-demo-config]').forEach(el => el.addEventListener('click', closeDemoConfig));
+  $('saveDemoConfig').addEventListener('click', () => {
+    const name = $('demoRecipientName').value.trim();
+    const bank = $('demoRecipientBank').value.trim();
+    if (!name) { $('demoRecipientName').focus(); $('demoConfigStatus').textContent = 'Informe o nome do destinatário.'; return; }
+    if (!bank) { $('demoRecipientBank').focus(); $('demoConfigStatus').textContent = 'Informe o banco do destinatário.'; return; }
+    demoPixConfig = { name, bank };
+    $('demoConfigStatus').textContent = 'Nome e banco do destinatário atualizados.';
+    setTimeout(closeDemoConfig, 450);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !demoConfigModal.hidden) closeDemoConfig(); });
+  // Fluxo demonstrativo de envio Pix em três etapas: dados, destinatário e senha em popup.
+  ['sendPixKey','sendPixAmount','sendPixPassword'].forEach(id => {
+    const field = $(id);
+    if (!field) return;
+    field.disabled = false;
+    field.readOnly = false;
+    field.removeAttribute('disabled');
+    field.removeAttribute('readonly');
+    field.tabIndex = 0;
+  });
+  const pixModal = $('pixPasswordModal');
+  function openPixPasswordModal(){
+    $('sendPixPassword').value = '';
+    $('pixPasswordError').textContent = '';
+    pixModal.hidden = false;
+    pixModal.setAttribute('aria-hidden','false');
+    document.body.classList.add('pix-modal-open');
+    setTimeout(() => $('sendPixPassword').focus(), 50);
+  }
+  function closePixPasswordModal(){
+    pixModal.hidden = true;
+    pixModal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('pix-modal-open');
+    $('sendPixPassword').value = '';
+  }
+  $('continuePixSend').addEventListener('click', () => {
+    const key = $('sendPixKey').value.trim();
+    const amount = Number($('sendPixAmount').value);
+    if (!key) { $('sendPixKey').focus(); $('sendPixKey').setCustomValidity('Informe a chave Pix do destinatário.'); $('sendPixKey').reportValidity(); $('sendPixKey').setCustomValidity(''); return; }
+    if (!Number.isFinite(amount) || amount <= 0) { $('sendPixAmount').focus(); $('sendPixAmount').setCustomValidity('Informe um valor maior que zero.'); $('sendPixAmount').reportValidity(); $('sendPixAmount').setCustomValidity(''); return; }
+    // Identificação visual simulada. Não consulta DICT, bancos ou serviços externos.
+    const mockRecipients = [
+      { name: 'Mariana Oliveira Santos', bank: 'Banco Horizonte (simulado)' },
+      { name: 'Rafael Costa Almeida', bank: 'Banco Aurora (simulado)' },
+      { name: 'Camila Ferreira Lima', bank: 'Banco Centralis (simulado)' },
+      { name: 'Lucas Martins Ribeiro', bank: 'Banco Verde (simulado)' }
+    ];
+    const mockIndex = Array.from(key).reduce((sum, char) => sum + char.charCodeAt(0), 0) % mockRecipients.length;
+    $('reviewPixRecipient').textContent = demoPixConfig.name || mockRecipients[mockIndex].name;
+    $('reviewPixBank').textContent = demoPixConfig.bank || mockRecipients[mockIndex].bank;
+    $('reviewPixKey').textContent = key;
+    $('reviewPixAmount').textContent = amount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    $('pixRecipientStep').hidden = false;
+    $('continuePixSend').hidden = true;
+    $('pixDemoAlert').classList.remove('show');
+    $('confirmPixRecipient').focus();
+  });
+  $('editPixDetails').addEventListener('click', () => {
+    $('pixRecipientStep').hidden = true;
+    $('continuePixSend').hidden = false;
+    $('sendPixKey').focus();
+  });
+  $('confirmPixRecipient').addEventListener('click', () => {
+    openPixPasswordModal();
+  });
+  $('confirmPixSend').addEventListener('click', () => {
+    if (!$('sendPixPassword').value.trim()) {
+      $('pixPasswordError').textContent = 'Digite sua senha para continuar.';
+      $('sendPixPassword').focus();
+      return;
+    }
+    closePixPasswordModal();
+    $('pixDemoAlert').classList.add('show');
+    $('pixDemoAlert').scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  $('closePixPassword').addEventListener('click', closePixPasswordModal);
+  $('cancelPixPassword').addEventListener('click', closePixPasswordModal);
+  pixModal.querySelectorAll('[data-close-pix-modal]').forEach(el => el.addEventListener('click', closePixPasswordModal));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pixModal.hidden) closePixPasswordModal(); });
+  document.querySelectorAll('[data-pix-action]').forEach(button => button.addEventListener('click', () => {
+    $('pixFeedback').textContent = button.dataset.pixAction + ': funcionalidade demonstrativa, sem integração bancária.';
+  }));
+  $('copyPixKey').addEventListener('click', async () => {
+    const key = '43.779.233/0001-47';
+    try {
+      await navigator.clipboard.writeText(key);
+      $('pixFeedback').textContent = 'Chave Pix copiada.';
+    } catch (error) {
+      $('pixFeedback').textContent = 'Não foi possível copiar automaticamente. Chave: ' + key;
+    }
+  });
   $('goConfirm').addEventListener('click', () => go('#/resumo'));
   $('goPass').addEventListener('click', () => go('#/senha'));
 
   function fillConfirm(){
     
 
+    $('cNet').textContent = brl(calc.net);
+    $('cTotal').textContent = brl(TOTAL);
+    $('cNet2').textContent = brl(calc.net);
     $('cPrazo').textContent = calc.prazo === 0 ? 'Hoje' : fmtDias(calc.prazo);
     $('cDate').textContent = calc.dateStr;
     $('cTarifa').textContent = calc.tarifa === 0 ? 'Grátis' : brl(calc.tarifa);
@@ -623,6 +956,7 @@
   function startTimer(){
     $('nPrazo').textContent = order.prazo === 0 ? 'Hoje' : fmtDias(order.prazo);
     $('nDate').textContent = order.dateStr;
+    $('nNet').textContent = brl(order.net);
   
     tick(); stopTimer(); timerId = setInterval(tick, 1000);
   }
@@ -630,11 +964,6 @@
   $('toHome').addEventListener('click', () => { inApp = false; location.hash = ''; });
   $('resetSim').addEventListener('click', () => { saveOrder(null); inApp = false; location.replace('#'); route(); });
 
-  /* ---- banner da home ---- */
-  function updateBanner(){
-    $('bTitle').textContent = order ? 'Transferência em andamento' : 'Você tem um pedido de transferência pendente';
-    $('bSub').textContent = order ? 'Pagamento será gerado em até 12 horas' : 'Migração da conta PJ de outro banco';
-  }
 
   route();
 
